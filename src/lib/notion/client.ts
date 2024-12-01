@@ -9,7 +9,7 @@ import {
   DATABASE_ID,
   NUMBER_OF_POSTS_PER_PAGE,
   REQUEST_TIMEOUT_MS,
-  DRAFT_PREVIEW
+  DRAFT_PREVIEW,
 } from '../../server-constants'
 import type * as responses from './responses'
 import type * as requestParams from './request-params'
@@ -74,27 +74,27 @@ export async function getAllPosts(): Promise<Post[]> {
     database_id: DATABASE_ID,
     filter: DRAFT_PREVIEW
       ? {
-        property: 'DraftPreview',
-        checkbox: {
-          equals: true,
-        },
-      }
+          property: 'DraftPreview',
+          checkbox: {
+            equals: true,
+          },
+        }
       : {
-        and: [
-          {
-            property: 'Published',
-            checkbox: {
-              equals: true,
+          and: [
+            {
+              property: 'Published',
+              checkbox: {
+                equals: true,
+              },
             },
-          },
-          {
-            property: 'Date',
-            date: {
-              on_or_before: new Date().toISOString(),
+            {
+              property: 'Date',
+              date: {
+                on_or_before: new Date().toISOString(),
+              },
             },
-          },
-        ],
-      },
+          ],
+        },
     sorts: [
       {
         property: 'Date',
